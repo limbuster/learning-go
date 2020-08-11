@@ -80,3 +80,27 @@ func TestPropertiesOfConversion(t *testing.T) {
 		t.Error("failed checks", err)
 	}
 }
+
+func BenchmarkCalculate(b *testing.B) {
+	b.Run("convert arabic number to roman number", func(b *testing.B) {
+		for _, c := range cases {
+			got := ConvertToRoman(c.Arabic)
+			want := c.Roman
+
+			if got != want {
+				b.Errorf("want %q got %q", want, got)
+			}
+		}
+	})
+
+	b.Run("convert roman number to arabic number", func(b *testing.B) {
+		for _, c := range cases {
+			got := ConvertToArabic(c.Roman)
+			want := c.Arabic
+
+			if got != want {
+				b.Errorf("want %d got %d", want, got)
+			}
+		}
+	})
+}
